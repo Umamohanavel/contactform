@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import './App.css';
 function Contactform() {
+    const [phoneNumber, setPhoneNumber] = useState('');
     const [formData, setFormData] = useState({
         name: '',
         phone: '',
@@ -12,6 +13,8 @@ function Contactform() {
       const handleChange = (e) => {
         const { name, value } = e.target;
         setFormData(prevState => ({...prevState, [name]: value}));
+        const digitsOnly = value.replace(/\D/g, '');
+        setPhoneNumber(digitsOnly);
       };
     
       const handleSubmit = (e) => {
@@ -19,7 +22,7 @@ function Contactform() {
         console.log(formData);
       }
   return (
-    <div>
+    <div className='body'>
         <div className="contact-form-container">
             <h2>Contact Us</h2>
             <form onSubmit={handleSubmit}>
@@ -38,9 +41,9 @@ function Contactform() {
                 <input
                 type="tel"
                 name="phone"
+                value={phoneNumber}
                 pattern='[0-9]'
                 maxLength='10'
-                value={formData.phone}
                 onChange={handleChange}
                 required
                 />
@@ -73,8 +76,7 @@ function Contactform() {
                 onChange={handleChange}
                 placeholder='How can we help you? Feel free to get in touch!'
                 required
-                />       
-                
+                />                      
             </div>
             <button type="submit" onChange={handleSubmit}>Send Message</button>
         </form>
